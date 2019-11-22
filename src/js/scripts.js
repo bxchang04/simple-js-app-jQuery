@@ -13,7 +13,7 @@ var pokemonRepository = (function () {
 
   //Bootstrap ver with details modal (instead of pokemon-modal)
   function addListItem(pokemon){
-    var listItem = $('<button type="button" class="pokemon-list_item list-group-item list-group-item-action" data-toggle="modal" data-target="#details-modal"></button>');
+    var listItem = $('<button type="button" class="pokemon-list_item list-group-item list-group-item-action" data-toggle="modal" data-target="#pokemon-modal"></button>');
     listItem.text(pokemon.name);
     $pokemonList.append(listItem);
     listItem.click(function() {
