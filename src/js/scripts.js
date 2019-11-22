@@ -12,24 +12,32 @@ var pokemonRepository = (function () {
     repository.push(pokemon);
   }
 
-  function addListItem(pokemon) { //only accpets pokemon
-    var $listItem = $('<li></li>');
-    var $button = $('<button="pokemon-list__button">pokemon.name</button>');
-    $listItem.append($button);
-    $pokemonList.appendChild($listItem);
-    $button.on('click', function() {
-      showDetails(pokemon);
-    })
+//jQuery ver
+  // function addListItem(pokemon) { //only accpets pokemon
+  //   var $listItem = $('<li></li>');
+  //   var $button = $('<button="pokemon-list__button">pokemon.name</button>');
+  //   $listItem.append($button);
+  //   $pokemonList.appendChild($listItem);
+  //   $button.on('click', function() {
+  //     showDetails(pokemon);
+  //   })
+  // }
+
+  //Bootstrap ver
+  function addListItem(pokemon) {
+    //append a <li> with a <button> inside:
+    $('#data-list').append('<button type="button" class="list-item__button list-group-item list-group-item-action"></button>');
+    //set button text and functionality:
+    $('.list-item__button').last()
+      .attr('data-toggle','modal')
+      .attr('data-target', '#detailsModal')
+      .text(pokemon.name)
+      .click(function(event){
+        showDetails(pokemon);
+      });
   }
 
   // Show details of each Pokemon
-  function showDetails(pokemon) {
-    pokemonRepository.loadDetails(pokemon).then(function () {
-      showModal(pokemon);
-    });
-  }
-
-  // Function to show details of each Pokemon
   function showDetails(pokemon) {
     pokemonRepository.loadDetails(pokemon).then(function () {
       showModal(pokemon);
@@ -90,6 +98,18 @@ var pokemonRepository = (function () {
     $modalContainer.addClass('is-visible');
   }
 
+//Bootstrap documentation
+  $('#exampleModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var recipient = button.data('whatever') // Extract info from data-* attributes
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    modal.find('.modal-title').text('New message to ' + recipient)
+    modal.find('.modal-body input').val(recipient)
+  })
+
+
   function hideModal() {
     $modalContainer.removeClass('is-visible');
 
@@ -103,12 +123,13 @@ var pokemonRepository = (function () {
     showModal('Modal title', 'This is the modal content!');
   });
 
-  //Modal escape methods - Check this for compatability
-  window.on('keydown', (e) => {
-    if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
-      hideModal();
-    }
-  });
+//error here -- commented out for now
+  // //Modal escape methods - Check this for compatability
+  // window.on('keydown', function(e) => {
+  //   if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
+  //     hideModal();
+  //   }
+  // });
 
   $modalContainer.on('click', (e) => {
     // Since this is also triggered when clicking INSIDE the modal container,

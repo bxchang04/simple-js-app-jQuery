@@ -29,13 +29,6 @@ var pokemonRepository = (function () {
     });
   }
 
-  // Function to show details of each Pokemon
-  function showDetails(pokemon) {
-    pokemonRepository.loadDetails(pokemon).then(function () {
-      showModal(pokemon);
-    });
-  }
-
  // Function to load Pokemon list from API
   function loadList() {
     return $.ajax(apiUrl, { dataType: 'json' }).then(function (json) {
@@ -99,18 +92,18 @@ var pokemonRepository = (function () {
     }
   }
 
-  $('#show-modal').on('click', function() => {
+  $('#show-modal').on('click', () => {
     showModal('Modal title', 'This is the modal content!');
   });
 
   //Modal escape methods - Check this for compatability
-  window.on('keydown', function(e) => {
+  window.on('keydown', (e) => {
     if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
       hideModal();
     }
   });
 
-  $modalContainer.on('click', function(e) => {
+  $modalContainer.on('click', (e) => {
     // Since this is also triggered when clicking INSIDE the modal container,
     // We only want to close if the user clicks directly on the overlay
     var target = e.target;
