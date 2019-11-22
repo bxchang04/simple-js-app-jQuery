@@ -14,15 +14,7 @@
     <header class="page-header">
       <img src="img/pokemon-logo.jpg" alt="Logo for Pokedex" class="logo"> <!-- modify later for 1.10-->
     </header>
-    <div class="wrapper">
-      <ul class="pokemon-list"></ul> <!-- changed from pokemon-name -->
-    </div>
-
-//uneeded?
-    <!-- Button trigger modal -->
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Launch demo modal
-    </button> -->
+    <div class="pokemon-list"> //for Bootstrap
 
     <!-- Modal -->
     <div class="modal fade" id='detailsModal' aria-label="modalContainer" aria-hidden="true">
@@ -43,7 +35,28 @@
         </div>
       </div>
     </div>
-    <!-- Modal -->
+
+    <!--Bootstrap modal-->
+		<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="pokemon-name" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header" class="list-group"> <!-- !!!added list group class but corners aren't round? How do I overwrite to make this look like my jQuery ver???-->
+							<h5 class="modal-title" id="pokemon-name"></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div> <!--modal-header-->
+						<div class="modal-body" id="pokemon-content"></div>
+						<div class="modal-footer">
+							<button type="button" class="modal-close btn btn-secondary" data-dismiss="modal" name="button">Close</button>
+						</div>
+					</div> <!--modal-content-->
+				</div> <!--modal-dialog-->
+			</div> <!--modal fade-->
+
+
+
+    <!-- Scripts -->
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

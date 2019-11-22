@@ -4,37 +4,21 @@
 var pokemonRepository = (function () {
  var repository = [];
  // Creates variable for index 'ul' with pokemonList class
- var $pokemonList = $('ul');
- var $modalContainer = $('#modal-container');
+ var $pokemonList = $('.pokemon-list')
  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
-  function add(pokemon) { //only accepts pokemon
+  function add(pokemon) { //!!!Test this with 'items' as param instead.
     repository.push(pokemon);
   }
 
-//jQuery ver
-  // function addListItem(pokemon) { //only accpets pokemon
-  //   var $listItem = $('<li></li>');
-  //   var $button = $('<button="pokemon-list__button">pokemon.name</button>');
-  //   $listItem.append($button);
-  //   $pokemonList.appendChild($listItem);
-  //   $button.on('click', function() {
-  //     showDetails(pokemon);
-  //   })
-  // }
-
-  //Bootstrap ver
-  function addListItem(pokemon) {
-    //append a <li> with a <button> inside:
-    $('#data-list').append('<button type="button" class="list-item__button list-group-item list-group-item-action"></button>');
-    //set button text and functionality:
-    $('.list-item__button').last()
-      .attr('data-toggle','modal')
-      .attr('data-target', '#detailsModal')
-      .text(pokemon.name)
-      .click(function(event){
-        showDetails(pokemon);
-      });
+  //Bootstrap ver with details modal (instead of pokemon-modal)
+  function addListItem(pokemon){
+    var listItem = $('<button type="button" class="pokemon-list_item list-group-item list-group-item-action" data-toggle="modal" data-target="#details-modal"></button>');
+    listItem.text(pokemon.name);
+    $pokemonList.append(listItem);
+    listItem.click(function() {
+      showDetails(pokemon)
+    });
   }
 
   // Show details of each Pokemon
@@ -72,73 +56,26 @@ var pokemonRepository = (function () {
     });
   }
 
-  // Function to show modal for Pokemon data
-  var $modalContainer = $('#modal-container');
-  var dialogPromiseReject; // This can be set later, by showDialog
+// creates Bootstrap Modal
+  function showModal(pokemon) {
 
-  function showModal(title, text) {
-    // Clear all existing modal content
-    $modalContainer.innerHTML = '';
+    var modal = $('.modal-body');
+    var name = $('.modal-title').text(pokemon.name);
+    var height = $('<p class="pokemon-height"></p>').text('Height: ' + pokemon.height + ' Decimetres.');
+    var weight = $('<p class="pokemon-weight"></p>').text('Weight: ' + pokemon.weight + ' Hectograms.');
+    var type = $('<p class="pokemon-type"></p>').text('Type: ' + pokemon.types + '.');
+    var image = $('<img class="pokemon-picture">');
+    image.attr('src', pokemon.imageUrl);
 
-    var modal = $('<div class="modal"></div>');
-
-    // Add the new modal content
-    var closeButtonElement = $('<button class="modal-close">Close</button>');
-    closeButtonElement.on('click', hideModal);
-
-    var titleElement = $('<h1>title</h1>');
-
-    var contentElement = $('<p>title</p>');
-
-    modal.appendChild(closeButtonElement);
-    modal.appendChild(titleElement);
-    modal.appendChild(contentElement);
-    $modalContainer.appendChild(modal);
-
-    $modalContainer.addClass('is-visible');
-  }
-
-//Bootstrap documentation
-  $('#exampleModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var recipient = button.data('whatever') // Extract info from data-* attributes
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this)
-    modal.find('.modal-title').text('New message to ' + recipient)
-    modal.find('.modal-body input').val(recipient)
-  })
-
-
-  function hideModal() {
-    $modalContainer.removeClass('is-visible');
-
-    if (dialogPromiseReject) {
-      dialogPromiseReject();
-      dialogPromiseRejct = null;
+    if(modal.children().length) {
+      modal.children().remove();
     }
+
+    modal.append(image)
+    	.append(height)
+    	.append(weight)
+      .append(type);
   }
-
-  $('#show-modal').on('click', () => {
-    showModal('Modal title', 'This is the modal content!');
-  });
-
-//error here -- commented out for now
-  // //Modal escape methods - Check this for compatability
-  // window.on('keydown', function(e) => {
-  //   if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
-  //     hideModal();
-  //   }
-  // });
-
-  $modalContainer.on('click', (e) => {
-    // Since this is also triggered when clicking INSIDE the modal container,
-    // We only want to close if the user clicks directly on the overlay
-    var target = e.target;
-    if (target === $modalContainer) {
-      hideModal();
-    }
-  });
 
   //Existing code from 1.8
   function getAll() {
@@ -148,23 +85,23 @@ var pokemonRepository = (function () {
  return {
    add: add,
    getAll: getAll,
-   addListItem: addListItem,
-   showDetails: showDetails,
+   addListItem: addListItem, //!!! Does this need to be moved outside of IFEE?
+   showDetails: showDetails, //!!! Does this need to be moved outside of IFEE?
    loadList: loadList,
    loadDetails: loadDetails,
    showModal: showModal,
-   hideModal: hideModal
  };
 })();
 
-var $pokemonList = $('ul');
-pokemonRepository.getAll().forEach(function(pokemon) { //pokemon is placeholder name for each element in repo
-  pokemonRepository.addListItem(pokemon); //what happens if parameter is blank, will it work?
-});
+//!!! For Bootstrap ver, why is this no longer needed?
+// var $pokemonList = $('ul');
+// pokemonRepository.getAll().forEach(function(pokemon) { //!!!does this need to be changed to .each?
+//   pokemonRepository.addListItem(pokemon);
+// });
 
 pokemonRepository.loadList().then(function() {
   // Now the data is loaded!
-  pokemonRepository.getAll().forEach(function(pokemon){
+  pokemonRepository.getAll().forEach(function(pokemon){ //!!!does this need to be changed to .each?
     pokemonRepository.addListItem(pokemon);
   });
 });
