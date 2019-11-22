@@ -16,7 +16,7 @@ var pokemonRepository = (function () {
     var $listItem = $('<li></li>');
     var $button = $('<button="pokemon-list__button">pokemon.name</button>');
     $listItem.append($button);
-    $pokemonList.appendChild($listItem);
+    $pokemonList.append($listItem);
     $button.on('click', function() {
       showDetails(pokemon);
     })
@@ -82,10 +82,10 @@ var pokemonRepository = (function () {
 
     var contentElement = $('<p>title</p>');
 
-    modal.appendChild(closeButtonElement);
-    modal.appendChild(titleElement);
-    modal.appendChild(contentElement);
-    $modalContainer.appendChild(modal);
+    modal.append(closeButtonElement);
+    modal.append(titleElement);
+    modal.append(contentElement);
+    $modalContainer.append(modal);
 
     $modalContainer.addClass('is-visible');
   }
@@ -103,14 +103,10 @@ var pokemonRepository = (function () {
     showModal('Modal title', 'This is the modal content!');
   });
 
-  //Modal escape methods - Check this for compatability
-  window.on('keydown', (e) => {
-    if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
-      hideModal();
-    }
-  });
+//First up your functions in jquery should follow this format $('input').on('click', function (event) { some action }); You seem to be trying $('input').on('click', function (event) => { some action });
 
-  $modalContainer.on('click', (e) => {
+  //Modal escape methods
+  $modalContainer.on('click', function (e) { // $modalContainer.on('click', function (e) =>
     // Since this is also triggered when clicking INSIDE the modal container,
     // We only want to close if the user clicks directly on the overlay
     var target = e.target;

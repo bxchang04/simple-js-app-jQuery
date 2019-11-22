@@ -1,27 +1,35 @@
-//this is 1.9 WIP. For all other assignments, please use the the appropriatley named js file.
+//this is 1.8 WIP. For all other assignments, please use the the appropriatley named js file.
 
 // Wraps repository within IIFE
 var pokemonRepository = (function () {
  var repository = [];
  // Creates variable for index 'ul' with pokemonList class
- var $pokemonList = $('.pokemon-list')
+ var $pokemonList = $('ul');
+ var $modalContainer = $('#modal-container');
  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
-  function add(pokemon) { //!!!Test this with 'items' as param instead.
+  function add(pokemon) { //only accepts pokemon
     repository.push(pokemon);
   }
 
-  //Bootstrap ver with details modal (instead of pokemon-modal)
-  function addListItem(pokemon){
-    var listItem = $('<button type="button" class="pokemon-list_item list-group-item list-group-item-action" data-toggle="modal" data-target="#pokemon-modal"></button>');
-    listItem.text(pokemon.name);
-    $pokemonList.append(listItem);
-    listItem.click(function() {
-      showDetails(pokemon)
-    });
+  function addListItem(pokemon) { //only accpets pokemon
+    var $listItem = $('<li></li>');
+    var $button = $('<button="pokemon-list__button">pokemon.name</button>');
+    $listItem.append($button);
+    $pokemonList.append($listItem);
+    $button.on('click', function() {
+      showDetails(pokemon);
+    })
   }
 
   // Show details of each Pokemon
+  function showDetails(pokemon) {
+    pokemonRepository.loadDetails(pokemon).then(function () {
+      showModal(pokemon);
+    });
+  }
+
+  // Function to show details of each Pokemon
   function showDetails(pokemon) {
     pokemonRepository.loadDetails(pokemon).then(function () {
       showModal(pokemon);
@@ -56,26 +64,56 @@ var pokemonRepository = (function () {
     });
   }
 
-// creates Bootstrap Modal
-  function showModal(pokemon) {
+  // Function to show modal for Pokemon data
+  var $modalContainer = $('#modal-container');
+  var dialogPromiseReject; // This can be set later, by showDialog
 
-    var modal = $('.modal-body');
-    var name = $('.modal-title').text(pokemon.name);
-    var height = $('<p class="pokemon-height"></p>').text('Height: ' + pokemon.height + ' Decimetres.');
-    var weight = $('<p class="pokemon-weight"></p>').text('Weight: ' + pokemon.weight + ' Hectograms.');
-    var type = $('<p class="pokemon-type"></p>').text('Type: ' + pokemon.types + '.');
-    var image = $('<img class="pokemon-picture">');
-    image.attr('src', pokemon.imageUrl);
+  function showModal(title, text) {
+    // Clear all existing modal content
+    $modalContainer.innerHTML = '';
 
-    if(modal.children().length) {
-      modal.children().remove();
-    }
+    var modal = $('<div class="modal"></div>');
 
-    modal.append(image)
-    	.append(height)
-    	.append(weight)
-      .append(type);
+    // Add the new modal content
+    var closeButtonElement = $('<button class="modal-close">Close</button>');
+    closeButtonElement.on('click', hideModal);
+
+    var titleElement = $('<h1>title</h1>');
+
+    var contentElement = $('<p>title</p>');
+
+    modal.append(closeButtonElement);
+    modal.append(titleElement);
+    modal.append(contentElement);
+    $modalContainer.append(modal);
+
+    $modalContainer.addClass('is-visible');
   }
+
+  function hideModal() {
+    $modalContainer.removeClass('is-visible');
+
+    if (dialogPromiseReject) {
+      dialogPromiseReject();
+      dialogPromiseRejct = null;
+    }
+  }
+
+  $('#show-modal').on('click', () => {
+    showModal('Modal title', 'This is the modal content!');
+  });
+
+//First up your functions in jquery should follow this format $('input').on('click', function (event) { some action }); You seem to be trying $('input').on('click', function (event) => { some action });
+
+  //Modal escape methods
+  $modalContainer.on('click', function (e) { // $modalContainer.on('click', function (e) =>
+    // Since this is also triggered when clicking INSIDE the modal container,
+    // We only want to close if the user clicks directly on the overlay
+    var target = e.target;
+    if (target === $modalContainer) {
+      hideModal();
+    }
+  });
 
   //Existing code from 1.8
   function getAll() {
@@ -85,23 +123,23 @@ var pokemonRepository = (function () {
  return {
    add: add,
    getAll: getAll,
-   addListItem: addListItem, //!!! Does this need to be moved outside of IFEE?
-   showDetails: showDetails, //!!! Does this need to be moved outside of IFEE?
+   addListItem: addListItem,
+   showDetails: showDetails,
    loadList: loadList,
    loadDetails: loadDetails,
    showModal: showModal,
+   hideModal: hideModal
  };
 })();
 
-//!!! For Bootstrap ver, why is this no longer needed?
-// var $pokemonList = $('ul');
-// pokemonRepository.getAll().forEach(function(pokemon) { //!!!does this need to be changed to .each?
-//   pokemonRepository.addListItem(pokemon);
-// });
+var $pokemonList = $('ul');
+pokemonRepository.getAll().forEach(function(pokemon) { //pokemon is placeholder name for each element in repo
+  pokemonRepository.addListItem(pokemon); //what happens if parameter is blank, will it work?
+});
 
 pokemonRepository.loadList().then(function() {
   // Now the data is loaded!
-  pokemonRepository.getAll().forEach(function(pokemon){ //!!!does this need to be changed to .each?
+  pokemonRepository.getAll().forEach(function(pokemon){
     pokemonRepository.addListItem(pokemon);
   });
 });
