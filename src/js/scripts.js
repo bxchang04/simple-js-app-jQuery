@@ -99,18 +99,18 @@ var pokemonRepository = (function () {
     }
   }
 
-  $('#show-modal').on('click', () => {
+  $('#show-modal').on('click', function() => {
     showModal('Modal title', 'This is the modal content!');
   });
 
   //Modal escape methods - Check this for compatability
-  window.on('keydown', (e) => {
+  window.on('keydown', function(e) => {
     if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
       hideModal();
     }
   });
 
-  $modalContainer.on('click', (e) => {
+  $modalContainer.on('click', function(e) => {
     // Since this is also triggered when clicking INSIDE the modal container,
     // We only want to close if the user clicks directly on the overlay
     var target = e.target;
