@@ -65,43 +65,21 @@ var pokemonRepository = (function () {
   }
 
   // Function to show modal for Pokemon data
-  var $modalContainer = $('#modal-container');
-  var dialogPromiseReject; // This can be set later, by showDialog
+  function showModal(pokemon) {
+    console.log('TCL: showModal -> pokemon', pokemon.imageUrl); //what is TCL??
 
-  function showModal(title, text) {
-    // Clear all existing modal content
-    $modalContainer.innerHTML = '';
+    //create element for Pokemon name. Is the .html necessary? Other submissions don't include that
+    var $nameElement = $('h5');
+    $nameElement.html(pokemon.name);
+    // $nameElement.html(pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1));
 
-    var modal = $('<div class="modal"></div>');
+    var $imageElement = $('<img src="' + pokemon.imageUrl + '">')
+    $('div.pokemon-img').html($imageElement)
 
-    // Add the new modal content
-    var closeButtonElement = $('<button class="modal-close">Close</button>');
-    closeButtonElement.on('click', hideModal);
-
-    var titleElement = $('<h1>title</h1>');
-
-    var contentElement = $('<p>title</p>');
-
-    modal.append(closeButtonElement);
-    modal.append(titleElement);
-    modal.append(contentElement);
-    $modalContainer.append(modal);
-
-    $modalContainer.addClass('is-visible');
+    var $heightElement = $('div.pokemon-info');
+    $heightElement.html('Height: ' + pokemon.height);
   }
 
-  function hideModal() {
-    $modalContainer.removeClass('is-visible');
-
-    if (dialogPromiseReject) {
-      dialogPromiseReject();
-      dialogPromiseRejct = null;
-    }
-  }
-
-  $('#show-modal').on('click', () => {
-    showModal('Modal title', 'This is the modal content!');
-  });
 
   //Other models to study - submissions 1, 2, 3
     //SUBMISSION 1
@@ -167,10 +145,18 @@ var pokemonRepository = (function () {
   //Other models, end.
 
 
-/*
-Jason:
-First up your functions in jquery should follow this format $('input').on('click', function (event) { some action }); You seem to be trying $('input').on('click', function (event) => { some action });
-*/
+  function hideModal() {
+    $modalContainer.removeClass('is-visible');
+  }
+
+  $('#show-modal').on('click', () => {
+    showModal('Modal title', 'This is the modal content!');
+  });
+
+  /*
+  Jason:
+  First up your functions in jquery should follow this format $('input').on('click', function (event) { some action }); You seem to be trying $('input').on('click', function (event) => { some action });
+  */
 
   //Modal escape methods
   $modalContainer.on('click', function (e) { // $modalContainer.on('click', function (e) =>

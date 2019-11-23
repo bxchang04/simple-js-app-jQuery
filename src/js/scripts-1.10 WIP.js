@@ -77,6 +77,27 @@ var pokemonRepository = (function () {
       .append(type);
   }
 
+/*jquery ver
+
+// Function to show modal for Pokemon data
+function showModal(pokemon) {
+  console.log('TCL: showModal -> pokemon', pokemon.imageUrl); //what is TCL??
+
+  //create element for Pokemon name. Is the .html necessary? Other submissions don't include that
+  var $nameElement = $('h5');
+  $nameElement.html(pokemon.name);
+  // $nameElement.html(pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1));
+
+  var $imageElement = $('<img src="' + pokemon.imageUrl + '">')
+  $('div.pokemon-img').html($imageElement)
+
+  var $heightElement = $('div.pokemon-info');
+  $heightElement.html('Height: ' + pokemon.height);
+}
+
+*/
+
+
   //Existing code from 1.8
   function getAll() {
     return repository;
