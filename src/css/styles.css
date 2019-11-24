@@ -60,12 +60,6 @@ ul {
   text-align: center;
 }
 
-/* button {
-  border: none;
-  background-color: #357b70;
-  color: yellow;
-} */
-
 /* Grid fallback */
 .pokemon-list {
   display: inline-block;
@@ -99,12 +93,30 @@ ul {
 /* MODAL START */
 #modal-container {
   display: none;
+  position: fixed;
+  padding: 20px;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+
+  /* to show it above other content */
+  z-index: 999;
+
+  /* to allow scrolling if the screen is not high enough*/
+  overflow: auto;
+
+  /* this is used to center the modal */
+  display: grid;
+  text-align: center;
 }
 
+/* !!!not sure if this is needed in 1.9 and 1.10 */
 #modal-container.is-visible {
-  /* CSS for modal container - add your own desired CSS styles here */
-  display: block;
-}
+    display: grid; /* 1.10 uses : block; study what : block  is */
+  }
 
 /* .modal-content {
   background: #FCCF00;

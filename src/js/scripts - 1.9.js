@@ -14,7 +14,7 @@ var pokemonRepository = (function () {
 
   function addListItem(pokemon) { //only accpets pokemon
     var $listItem = $('<li></li>');
-    var $button = $('<button="pokemon-list__button">pokemon.name</button>');
+    var $button = $('<button="pokemon-list__button">' + pokemon.name +'</button>');
     $listItem.append($button);
     $pokemonList.append($listItem);
     $button.on('click', function() {
@@ -80,7 +80,7 @@ var pokemonRepository = (function () {
     $heightElement.html('Height: ' + pokemon.height);
   }
 
-
+/*
   //Other models to study - submissions 1, 2, 3
     //SUBMISSION 1
       //Uses  $('div').html to createElement .html
@@ -91,6 +91,7 @@ var pokemonRepository = (function () {
 
       //create element for Pokemon name. Is the .html necessary? Other submissions don't include that
       var $nameElement = $('h5');
+      $nameElement.html(item.name.charAt(0).toUpperCase() + item.name.slice(1));
       $nameElement.html(item.name.charAt(0).toUpperCase() + item.name.slice(1));
 
       var $imageElement = $('<img src="' + item.imageUrl + '">')
@@ -143,7 +144,7 @@ var pokemonRepository = (function () {
       $('#pokeWeight').text('Weight: ' + item.weight);
     }
   //Other models, end.
-
+*/
 
   function hideModal() {
     $modalContainer.removeClass('is-visible');
