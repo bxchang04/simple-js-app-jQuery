@@ -1,4 +1,4 @@
-<!-- Bootstrap ver -->
+<!-- jQuery ver -->
 <!DOCTYPE html>
 <html id="background">
   <head>
@@ -12,28 +12,12 @@
     <header class="page-header">
       <img src="img/pokemon-logo.jpg" alt="Logo for Pokedex" class="logo"> <!-- modify later for 1.10-->
     </header>
-    <div class="pokemon-list"></div>
-
-    <!--Bootstrap modal-->
-		<div class="modal fade" id="pokemon-modal" tabindex="-1" role="dialog" aria-labelledby="pokemon-name" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header list-group"> <!-- !!!added list group class but corners aren't round? How do I overwrite to make this look like my jQuery ver???-->
-							<h5 class="modal-title" id="pokemon-name"></h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div> <!--modal-header-->
-						<div class="modal-body" id="pokemon-content"></div>
-						<div class="modal-footer">
-							<button type="button" class="modal-close btn btn-secondary" data-dismiss="modal" name="button">Close</button>
-						</div>
-					</div> <!--modal-content-->
-				</div> <!--modal-dialog-->
-			</div> <!--modal fade-->
-
-    <!-- Scripts -->
-    <script
+    <div class="wrapper">
+      <ul class="pokemon-list"></ul> <!-- changed from pokemon-name -->
+    </div>
+     <!-- Modal -->
+     <div id='modal-container'></div>
+     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
