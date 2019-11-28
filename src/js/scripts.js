@@ -1,35 +1,27 @@
-//this is 1.9 WIP. For all other assignments, please use the the appropriatley named js file.
+//this is 1.10 WIP. For all other assignments, please use the the appropriatley named js file.
 
 // Wraps repository within IIFE
 var pokemonRepository = (function () {
  var repository = [];
  // Creates variable for index 'ul' with pokemonList class
- var $pokemonList = $('ul');
- var $modalContainer = $('#modal-container'); //querySelector
+ var $pokemonList = $('.pokemon-list')
  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
-  function add(pokemon) { //only accepts pokemon
+  function add(pokemon) { //!!!Test this with 'items' as param instead.
     repository.push(pokemon);
   }
 
-  function addListItem(pokemon) { //only accpets pokemon
-    var $listItem = $('<li></li>');
-    var $button = $('<button class="pokemon-list__button">' + pokemon.name +'</button>'); //syntax error corrected
-    $listItem.append($button);
-    $pokemonList.append($listItem);
-    $button.on('click', function() {
-      showDetails(pokemon);
-    })
-  }
-
-  // Show details of each Pokemon
-  function showDetails(pokemon) {
-    pokemonRepository.loadDetails(pokemon).then(function () {
-      showModal(pokemon);
+  //Bootstrap ver with details modal (instead of pokemon-modal)
+  function addListItem(pokemon){
+    var listItem = $('<button type="button" class="pokemon-list_item list-group-item list-group-item-action" data-toggle="modal" data-target="#pokemon-modal"></button>');
+    listItem.text(pokemon.name);
+    $pokemonList.append(listItem);
+    listItem.click(function() {
+      showDetails(pokemon)
     });
   }
 
-  // Function to show details of each Pokemon
+  // Show details of each Pokemon
   function showDetails(pokemon) {
     pokemonRepository.loadDetails(pokemon).then(function () {
       showModal(pokemon);
@@ -64,46 +56,47 @@ var pokemonRepository = (function () {
     });
   }
 
-  // Function to show modal for Pokemon data
+// creates Bootstrap Modal
   function showModal(pokemon) {
-    console.log('TCL: showModal -> pokemon', pokemon.imageUrl); //what is TCL??
-    //
-//jQuery = write literal HTML for syntax
 
-    $modalContainer.empty();
-    var $modal = $('<div class="pokemon-modal"></div>'); //can't name it modal otherwise jQuery has a conflict -- class needs double quotes -- snake case
-    var $closeButtonElement = $('<button class="modalClose"> Close </button>').on('click', hideModal);
-    pokemon.name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.substring(1);
-    var $nameElement = $('<h1>' + pokemon.name + '</h1>');
-    var $imageElement = $('<img src=' + pokemon.imageUrl + '>');
-    var $heightElement = $('<div>Height: ' + pokemon.height + '</div>');
-    var $typesElement = $('<div>Type: ' + pokemon.types + '</div>');
+    var modal = $('.modal-body');
+    var name = $('.modal-title').text(pokemon.name);
+    var height = $('<p class="pokemon-height"></p>').text('Height: ' + pokemon.height + ' Decimetres.');
+    var weight = $('<p class="pokemon-weight"></p>').text('Weight: ' + pokemon.weight + ' Hectograms.');
+    var type = $('<p class="pokemon-type"></p>').text('Type: ' + pokemon.types + '.');
+    var image = $('<img class="pokemon-picture">');
+    image.attr('src', pokemon.imageUrl);
 
-    $modal.append($closeButtonElement);
-    $modal.append($nameElement);
-    $modal.append($imageElement);
-    $modal.append($heightElement);
-    $modal.append($typesElement);
-    $modalContainer.append($modal).addClass('is-visible');
-  }
-
-  function hideModal() {
-    $modalContainer.removeClass('is-visible');
-  }
-
-  //*Jason:
-  // First up your functions in jquery should follow this format $('input').on('click', function (event) { some action }); You seem to be trying $('input').on('click', function (event) => { some action });
-  // */
-
-  //Modal escape methods
-  $modalContainer.on('click', function (e) { // $modalContainer.on('click', function (e) =>
-    // Since this is also triggered when clicking INSIDE the modal container,
-    // We only want to close if the user clicks directly on the overlay
-    var target = e.target;
-    if (target === $modalContainer) {
-      hideModal();
+    if(modal.children().length) {
+      modal.children().remove();
     }
-  });
+
+    modal.append(image)
+    	.append(height)
+    	.append(weight)
+      .append(type);
+  }
+
+/*jquery ver
+
+// Function to show modal for Pokemon data
+function showModal(pokemon) {
+  console.log('TCL: showModal -> pokemon', pokemon.imageUrl); //what is TCL??
+
+  //create element for Pokemon name. Is the .html necessary? Other submissions don't include that
+  var $nameElement = $('h5');
+  $nameElement.html(pokemon.name);
+  // $nameElement.html(pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1));
+
+  var $imageElement = $('<img src="' + pokemon.imageUrl + '">')
+  $('div.pokemon-img').html($imageElement)
+
+  var $heightElement = $('div.pokemon-info');
+  $heightElement.html('Height: ' + pokemon.height);
+}
+
+*/
+
 
   //Existing code from 1.8
   function getAll() {
@@ -113,23 +106,23 @@ var pokemonRepository = (function () {
  return {
    add: add,
    getAll: getAll,
-   addListItem: addListItem,
-   showDetails: showDetails,
+   addListItem: addListItem, //!!! Does this need to be moved outside of IFEE?
+   showDetails: showDetails, //!!! Does this need to be moved outside of IFEE?
    loadList: loadList,
    loadDetails: loadDetails,
    showModal: showModal,
-   hideModal: hideModal
  };
 })();
 
-var $pokemonList = $('ul');
-pokemonRepository.getAll().forEach(function(pokemon) { //pokemon is placeholder name for each element in repo
-  pokemonRepository.addListItem(pokemon); //what happens if parameter is blank, will it work?
-});
+//!!! For Bootstrap ver, why is this no longer needed?
+// var $pokemonList = $('ul');
+// pokemonRepository.getAll().forEach(function(pokemon) { //!!!does this need to be changed to .each?
+//   pokemonRepository.addListItem(pokemon);
+// });
 
 pokemonRepository.loadList().then(function() {
   // Now the data is loaded!
-  pokemonRepository.getAll().forEach(function(pokemon){
+  pokemonRepository.getAll().forEach(function(pokemon){ //!!!does this need to be changed to .each?
     pokemonRepository.addListItem(pokemon);
   });
 });
