@@ -63,12 +63,12 @@ ul {
 /* Grid fallback */
 .pokemon-list {
   display: inline-block;
-  width: 1fr;
+  /* width: 1fr; */
 }
 
 .pokemon-list {
   display: grid;
-  grid-auto-columns: minmax(1fr, 100px); /* how do you limit max width? */
+  /* grid-auto-columns: minmax(1fr, 100px); */
   list-style-type: none;
   text-align: center;
   list-style: none;
@@ -109,23 +109,28 @@ ul {
   overflow: auto;
 
   /* this is used to center the modal */
-  display: grid;
+  /* display: grid; */ /* commented out to fix a bug */
   text-align: center;
+}
+
+/* need to center align and proper case */
+.pokemon-modal{
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 15px;
+  width: 100%;
+  max-width: 700px;
+  text-align: left;
 }
 
 /* !!!not sure if this is needed in 1.9 and 1.10 */
 #modal-container.is-visible {
-    display: grid; /* 1.10 uses : block; study what : block  is */
+    display: grid; /* !!! 1.10 uses : block; study what : block  is */
   }
 
-/* .modal-content {
-  background: #FCCF00;
-}
-
-.modal-body {
-  background: #FCCF00;
-  text-align: center;
-} */
 /* MODAL END */
 
 .pokemon-list__button {

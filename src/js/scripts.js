@@ -5,7 +5,7 @@ var pokemonRepository = (function () {
  var repository = [];
  // Creates variable for index 'ul' with pokemonList class
  var $pokemonList = $('ul');
- var $modalContainer = $('#modal-container');
+ var $modalContainer = $('#modal-container'); //querySelector
  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
   function add(pokemon) { //only accepts pokemon
@@ -14,7 +14,7 @@ var pokemonRepository = (function () {
 
   function addListItem(pokemon) { //only accpets pokemon
     var $listItem = $('<li></li>');
-    var $button = $('<button="pokemon-list__button">' + pokemon.name +'</button>'); //doesn't display properly
+    var $button = $('<button class="pokemon-list__button">' + pokemon.name +'</button>'); //syntax error corrected
     $listItem.append($button);
     $pokemonList.append($listItem);
     $button.on('click', function() {
@@ -67,97 +67,33 @@ var pokemonRepository = (function () {
   // Function to show modal for Pokemon data
   function showModal(pokemon) {
     console.log('TCL: showModal -> pokemon', pokemon.imageUrl); //what is TCL??
+    //
+//jQuery = write literal HTML for syntax
 
-    //create element for Pokemon name. Is the .html necessary? Other submissions don't include that
-    var $nameElement = $('h5');
-    $nameElement.html(pokemon.name);
-    // $nameElement.html(pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1));
+    $modalContainer.empty();
+    var $modal = $('<div class="pokemon-modal"></div>'); //can't name it modal otherwise jQuery has a conflict -- class needs double quotes -- snake case
+    var $closeButtonElement = $('<button class="modalClose"> Close </button>').on('click', hideModal);
+    pokemon.name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.substring(1);
+    var $nameElement = $('<h1>' + pokemon.name + '</h1>');
+    var $imageElement = $('<img src=' + pokemon.imageUrl + '>');
+    var $heightElement = $('<div>Height: ' + pokemon.height + '</div>');
+    var $typesElement = $('<div>Type: ' + pokemon.types + '</div>');
 
-    var $imageElement = $('<img src="' + pokemon.imageUrl + '">')
-    $('div.pokemon-img').html($imageElement)
-
-    var $heightElement = $('div.pokemon-info');
-    $heightElement.html('Height: ' + pokemon.height);
+    $modal.append($closeButtonElement);
+    $modal.append($nameElement);
+    $modal.append($imageElement);
+    $modal.append($heightElement);
+    $modal.append($typesElement);
+    $modalContainer.append($modal).addClass('is-visible');
   }
-
-/*
-  //Other models to study - submissions 1, 2, 3
-    //SUBMISSION 1
-      //Uses  $('div').html to createElement .html
-
-    //Function to show modal for Pokemon data
-    function showModal(item) {
-      console.log('TCL: showModal -> item', item.imageUrl); //what is TCL??
-
-      //create element for Pokemon name. Is the .html necessary? Other submissions don't include that
-      var $nameElement = $('h5');
-      $nameElement.html(item.name.charAt(0).toUpperCase() + item.name.slice(1));
-      $nameElement.html(item.name.charAt(0).toUpperCase() + item.name.slice(1));
-
-      var $imageElement = $('<img src="' + item.imageUrl + '">')
-      $('div.pokemon-img').html($imageElement)
-
-      var $heightElement = $('div.pokemon-info');
-      $heightElement.html('Height: ' + item.height);
-    }
-
-    //SUBMISSION 2
-      //seems the most similar to my approach
-    function showModal(mortuusObj) {
-      // 1
-      $('#modal-container')
-        .empty() //what's this for?
-        .append('<div class="modal"></div>');
-      //2
-      $('.modal') //createElement
-          .append('<button class="modal-close">close</button>')
-          .append('<h3 class="modal-title"></h3>')
-          .append('<img class="modal-img">')
-          .append('<p class="modal-birth"></p>')
-          .append('<p class="modal-death"></p>')
-          .append('<p class="modal-species"></p>');
-      //3
-      $('.modal-close').click(function() {hideModal();});
-      $('.modal-title').text(mortuusObj.name);
-      $('.modal-img').attr('src', mortuusObj.imageUrl);
-      //4
-      $('.modal-birth').text(getBirthText(mortuusObj));
-      $('.modal-death').text(getDeathText(mortuusObj));
-      $('.modal-species').text(getSpeciesText(mortuusObj));
-      //5
-      $('#modal-container').addClass('is-visible');
-    }
-    //modal EventListeners:
-    $('#modal-container').click(function() {hideModal();});
-    $(document).keydown(function (e) {
-      if (e.key === "Escape") {
-        hideModal();
-      }
-    })
-
-    //SUBMISSION
-      //the most concise. Stringing? Removes need to use .append???
-    function showModal(item) {
-      $('#pokeName').text(item.name);
-      $('#pokeImg').attr('src', item.imageUrl);
-      $('#pokeHeight').text('Height: ' + item.height);
-      $('#pokeWeight').text('Weight: ' + item.weight);
-    }
-  //Other models, end.
-*/
 
   function hideModal() {
     $modalContainer.removeClass('is-visible');
   }
 
-  $('#show-modal').on('click', () => {
-    showModal('Modal title', 'This is the modal content!');
-  });
-
-  /*
-  Jason:
-  First up your functions in jquery should follow this format $('input').on('click', function (event) { some action }); You seem to be trying $('input').on('click', function (event) => { some action });
-  */
+  //*Jason:
+  // First up your functions in jquery should follow this format $('input').on('click', function (event) { some action }); You seem to be trying $('input').on('click', function (event) => { some action });
+  // */
 
   //Modal escape methods
   $modalContainer.on('click', function (e) { // $modalContainer.on('click', function (e) =>
