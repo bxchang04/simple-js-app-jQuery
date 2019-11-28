@@ -133,7 +133,7 @@ ul {
 
 /* MODAL END */
 
-.pokemon-list__button {
+.pokemon-list__button, .list-group-item {
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   transition: all 0.5s ease 0s;
   text-transform: capitalize;
@@ -147,6 +147,7 @@ ul {
   width: 100%;
 }
 
+/*add .list-group-item to classes below! */
 .pokemon-list__button:focus,
 .pokemon-list__button:active {
   color: gray;
