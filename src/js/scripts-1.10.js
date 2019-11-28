@@ -1,4 +1,4 @@
-//this is 1.10 WIP. For all other assignments, please use the the appropriatley named js file.
+//this is 1.10. For all other assignments, please use the the appropriatley named js file.
 
 // Wraps repository within IIFE
 var pokemonRepository = (function () {
@@ -50,7 +50,12 @@ var pokemonRepository = (function () {
       // Now we add the details to the item
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
-      item.types = Object.keys(details.types);
+
+      if (details.types.length == 2 ) {
+  			item.types = [details.types[0].type.name, details.types[1].type.name];
+  		} else {
+    			item.types = [details.types[0].type.name];
+  		}
     }).catch(function (e) {
       console.error(e);
     });
@@ -77,27 +82,6 @@ var pokemonRepository = (function () {
       .append(type);
   }
 
-/*jquery ver
-
-// Function to show modal for Pokemon data
-function showModal(pokemon) {
-  console.log('TCL: showModal -> pokemon', pokemon.imageUrl); //what is TCL??
-
-  //create element for Pokemon name. Is the .html necessary? Other submissions don't include that
-  var $nameElement = $('h5');
-  $nameElement.html(pokemon.name);
-  // $nameElement.html(pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1));
-
-  var $imageElement = $('<img src="' + pokemon.imageUrl + '">')
-  $('div.pokemon-img').html($imageElement)
-
-  var $heightElement = $('div.pokemon-info');
-  $heightElement.html('Height: ' + pokemon.height);
-}
-
-*/
-
-
   //Existing code from 1.8
   function getAll() {
     return repository;
@@ -113,12 +97,6 @@ function showModal(pokemon) {
    showModal: showModal,
  };
 })();
-
-//!!! For Bootstrap ver, why is this no longer needed?
-// var $pokemonList = $('ul');
-// pokemonRepository.getAll().forEach(function(pokemon) { //!!!does this need to be changed to .each?
-//   pokemonRepository.addListItem(pokemon);
-// });
 
 pokemonRepository.loadList().then(function() {
   // Now the data is loaded!

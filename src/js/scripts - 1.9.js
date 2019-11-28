@@ -1,4 +1,4 @@
-//this is 1.9 WIP. For all other assignments, please use the the appropriatley named js file.
+//this is 1.9. For all other assignments, please use the the appropriatley named js file.
 
 // Wraps repository within IIFE
 var pokemonRepository = (function () {
@@ -20,13 +20,6 @@ var pokemonRepository = (function () {
     $button.on('click', function() {
       showDetails(pokemon);
     })
-  }
-
-  // Show details of each Pokemon
-  function showDetails(pokemon) {
-    pokemonRepository.loadDetails(pokemon).then(function () {
-      showModal(pokemon);
-    });
   }
 
   // Function to show details of each Pokemon
@@ -51,18 +44,23 @@ var pokemonRepository = (function () {
     })
   }
 
- // Load details of each Pokemon that is clicked
-  function loadDetails(item) {
-    var url = item.detailsUrl;
-    return $.ajax(url, { dataType: 'json' }).then(function (details) {
-      // Now we add the details to the item
-      item.imageUrl = details.sprites.front_default;
-      item.height = details.height;
-      item.types = Object.keys(details.types);
-    }).catch(function (e) {
-      console.error(e);
-    });
-  }
+  // Load details of each Pokemon that is clicked
+   function loadDetails(item) {
+     var url = item.detailsUrl;
+     return $.ajax(url, { dataType: 'json' }).then(function (details) {
+       // Now we add the details to the item
+       item.imageUrl = details.sprites.front_default;
+       item.height = details.height;
+
+       if (details.types.length == 2 ) {
+   			item.types = [details.types[0].type.name, details.types[1].type.name];
+   		} else {
+     			item.types = [details.types[0].type.name];
+   		}
+     }).catch(function (e) {
+       console.error(e);
+     });
+   }
 
   // Function to show modal for Pokemon data
   function showModal(pokemon) {
