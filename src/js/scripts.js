@@ -49,6 +49,7 @@ var pokemonRepository = (function () {
        // Now we add the details to the item
        item.imageUrl = details.sprites.front_default;
        item.height = details.height;
+       item.weight = details.weight;
 
        if (details.types.length == 2 ) {
    			item.types = [details.types[0].type.name, details.types[1].type.name];
@@ -73,12 +74,14 @@ var pokemonRepository = (function () {
     var $nameElement = $('<h1>' + pokemon.name + '</h1>');
     var $imageElement = $('<img src=' + pokemon.imageUrl + '>');
     var $heightElement = $('<div>Height: ' + pokemon.height + '</div>');
+    var $weightElement = $('<div>Height: ' + pokemon.weight + '</div>');
     var $typesElement = $('<div>Type: ' + pokemon.types + '</div>');
 
     $modal.append($closeButtonElement);
     $modal.append($nameElement);
     $modal.append($imageElement);
     $modal.append($heightElement);
+    $modal.append($weightElement);
     $modal.append($typesElement);
     $modalContainer.append($modal).addClass('is-visible');
   }
