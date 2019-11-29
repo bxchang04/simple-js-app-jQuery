@@ -69,7 +69,6 @@ var pokemonRepository = (function () {
 
 // creates Bootstrap Modal
   function showModal(pokemon) {
-
     var modal = $('.modal-body');
     pokemon.name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.substring(1);
     var name = $('.modal-title').text(pokemon.name);

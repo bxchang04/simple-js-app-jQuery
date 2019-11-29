@@ -38,7 +38,9 @@ var pokemonRepository = (function () {
         add(pokemon);
       });
     }).catch(function (e) {
+      /* eslint-disable no-console */
       console.error(e);
+      /* eslint-enable no-console */
     })
   }
 
@@ -52,21 +54,19 @@ var pokemonRepository = (function () {
        item.weight = details.weight;
 
        if (details.types.length == 2 ) {
-   			item.types = [details.types[0].type.name, details.types[1].type.name];
-   		} else {
-     			item.types = [details.types[0].type.name];
-   		}
+         item.types = [details.types[0].type.name, details.types[1].type.name];
+       } else {
+         item.types = [details.types[0].type.name];
+       }
      }).catch(function (e) {
+       /* eslint-disable no-console */
        console.error(e);
+       /* eslint-enable no-console */
      });
    }
 
   // Function to show modal for Pokemon data
   function showModal(pokemon) {
-    console.log('TCL: showModal -> pokemon', pokemon.imageUrl); //what is TCL??
-    //
-//jQuery = write literal HTML for syntax
-
     $modalContainer.empty();
     var $modal = $('<div class="pokemon-modal"></div>'); //can't name it modal otherwise jQuery has a conflict -- class needs double quotes -- snake case
     var $closeButtonElement = $('<button class="modalClose"> Close </button>').on('click', hideModal);

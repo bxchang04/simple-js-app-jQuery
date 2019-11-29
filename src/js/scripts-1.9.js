@@ -40,7 +40,9 @@ var pokemonRepository = (function () {
         add(pokemon);
       });
     }).catch(function (e) {
+      /* eslint-disable no-console */
       console.error(e);
+      /* eslint-enable no-console */
     })
   }
 
@@ -52,20 +54,25 @@ var pokemonRepository = (function () {
        item.imageUrl = details.sprites.front_default;
        item.height = details.height;
 
-       if (details.types.length == 2 ) {
-   			item.types = [details.types[0].type.name, details.types[1].type.name];
-   		} else {
-     			item.types = [details.types[0].type.name];
-   		}
+     if (details.types.length == 2 ) {
+         item.types = [details.types[0].type.name, details.types[1].type.name];
+      } else {
+        item.types = [details.types[0].type.name];
+      }
      }).catch(function (e) {
+       /* eslint-disable no-console */
        console.error(e);
+       /* eslint-enable no-console */
      });
    }
 
   // Function to show modal for Pokemon data
   function showModal(pokemon) {
+    /* eslint-disable no-console */
     console.log('TCL: showModal -> pokemon', pokemon.imageUrl); //what is TCL??
     //
+    /* eslint-enable no-console */
+
 //jQuery = write literal HTML for syntax
 
     $modalContainer.empty();
@@ -120,7 +127,7 @@ var pokemonRepository = (function () {
  };
 })();
 
-var $pokemonList = $('ul');
+//var $pokemonList = $('ul');
 pokemonRepository.getAll().forEach(function(pokemon) { //pokemon is placeholder name for each element in repo
   pokemonRepository.addListItem(pokemon); //what happens if parameter is blank, will it work?
 });
