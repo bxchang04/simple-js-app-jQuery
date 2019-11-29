@@ -1,5 +1,3 @@
-//this is 1.9. For all other assignments, please use the the appropriatley named js file.
-
 // Wraps repository within IIFE
 var pokemonRepository = (function () {
  var repository = [];
