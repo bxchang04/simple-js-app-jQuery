@@ -74,7 +74,7 @@ var pokemonRepository = (function () {
     var $nameElement = $('<h1>' + pokemon.name + '</h1>');
     var $imageElement = $('<img src=' + pokemon.imageUrl + '>');
     var $heightElement = $('<div>Height: ' + pokemon.height + '</div>');
-    var $weightElement = $('<div>Height: ' + pokemon.weight + '</div>');
+    var $weightElement = $('<div>Weight: ' + pokemon.weight + '</div>');
     var $typesElement = $('<div>Type: ' + pokemon.types + '</div>');
 
     $modal.append($closeButtonElement);
