@@ -39,7 +39,10 @@ var pokemonRepository = (function () {
         add(pokemon);
       });
     }).catch(function (e) {
+      /* eslint-disable no-console */
       console.error(e);
+      /* eslint-enable no-console */
+
     })
   }
 
@@ -53,12 +56,14 @@ var pokemonRepository = (function () {
       item.weight = details.weight;
 
       if (details.types.length == 2 ) {
-  			item.types = [details.types[0].type.name, details.types[1].type.name];
-  		} else {
-    			item.types = [details.types[0].type.name];
-  		}
+      item.types = [details.types[0].type.name, details.types[1].type.name];
+      } else {
+        item.types = [details.types[0].type.name];
+      }
     }).catch(function (e) {
+      /* eslint-disable no-console */
       console.error(e);
+      /* eslint-enable no-console */
     });
   }
 
@@ -66,6 +71,7 @@ var pokemonRepository = (function () {
   function showModal(pokemon) {
 
     var modal = $('.modal-body');
+    pokemon.name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.substring(1);
     var name = $('.modal-title').text(pokemon.name);
     var height = $('<p class="pokemon-height"></p>').text('Height: ' + pokemon.height + ' Decimetres.');
     var weight = $('<p class="pokemon-weight"></p>').text('Weight: ' + pokemon.weight + ' Hectograms.');
@@ -78,8 +84,9 @@ var pokemonRepository = (function () {
     }
 
     modal.append(image)
-    	.append(height)
-    	.append(weight)
+      .append(name)
+      .append(height)
+      .append(weight)
       .append(type);
   }
 
