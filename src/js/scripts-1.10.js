@@ -50,6 +50,7 @@ var pokemonRepository = (function () {
       // Now we add the details to the item
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
+      item.weight = details.weight;
 
       if (details.types.length == 2 ) {
   			item.types = [details.types[0].type.name, details.types[1].type.name];
