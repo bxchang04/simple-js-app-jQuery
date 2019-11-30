@@ -1,17 +1,15 @@
-//this is 1.10. For all other assignments, please use the the appropriatley named js file.
-
 // Wraps repository within IIFE
 var pokemonRepository = (function () {
  var repository = [];
- // Creates variable for index 'ul' with pokemonList class
+ // Creates variable for index with pokemonList class
  var $pokemonList = $('.pokemon-list')
  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
-  function add(pokemon) { //!!!Test this with 'items' as param instead.
+  function add(pokemon) {
     repository.push(pokemon);
   }
 
-  //Bootstrap ver with details modal (instead of pokemon-modal)
+  //Bootstrap vers
   function addListItem(pokemon){
     var listItem = $('<button type="button" class="pokemon-list_item list-group-item list-group-item-action" data-toggle="modal" data-target="#pokemon-modal"></button>');
     listItem.text(pokemon.name);
@@ -89,7 +87,6 @@ var pokemonRepository = (function () {
       .append(type);
   }
 
-  //Existing code from 1.8
   function getAll() {
     return repository;
   }
@@ -97,8 +94,8 @@ var pokemonRepository = (function () {
  return {
    add: add,
    getAll: getAll,
-   addListItem: addListItem, //!!! Does this need to be moved outside of IFEE?
-   showDetails: showDetails, //!!! Does this need to be moved outside of IFEE?
+   addListItem: addListItem,
+   showDetails: showDetails,
    loadList: loadList,
    loadDetails: loadDetails,
    showModal: showModal,
@@ -107,7 +104,7 @@ var pokemonRepository = (function () {
 
 pokemonRepository.loadList().then(function() {
   // Now the data is loaded!
-  pokemonRepository.getAll().forEach(function(pokemon){ //!!!does this need to be changed to .each?
+  pokemonRepository.getAll().forEach(function(pokemon){
     pokemonRepository.addListItem(pokemon);
   });
 });
